@@ -23,3 +23,64 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+
+body {
+  margin: 20px 20px;
+}
+
+.tasks {
+  display: flex;
+  justify-content: space-between;
+}
+
+.timer-header {
+  display: flex;
+  gap: 40px;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.timer {
+  margin-top: 15px;
+  display: flex;
+  gap: 5px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.value {
+  font-weight: 550;
+  font-size: 30px;
+}
+
+.label {
+  font-weight: 550;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.snackbar-header {
+  display: flex;
+  gap: 40px;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 8px 16px;
+  max-width: fit-content;
+}
+
+.delay {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
