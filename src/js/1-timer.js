@@ -1,54 +1,6 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
-const input = document.createElement('input');
-input.type = 'text';
-input.id = 'datetime-picker';
-input.placeholder = 'Select a date';
-
-const startBtn = document.createElement('button');
-startBtn.id = 'start-btn';
-startBtn.textContent = 'Start';
-startBtn.disabled = true;
-
-const timer = document.createElement('div');
-timer.id = 'timer';
-
-const days = document.createElement('span');
-days.id = 'days';
-days.textContent = '00';
-
-const hours = document.createElement('span');
-hours.id = 'hours';
-hours.textContent = '00';
-
-const minutes = document.createElement('span');
-minutes.id = 'minutes';
-minutes.textContent = '00';
-
-const seconds = document.createElement('span');
-seconds.id = 'seconds';
-seconds.textContent = '00';
-
-timer.appendChild(days);
-timer.appendChild(document.createTextNode(':'));
-timer.appendChild(hours);
-timer.appendChild(document.createTextNode(':'));
-timer.appendChild(minutes);
-timer.appendChild(document.createTextNode(':'));
-timer.appendChild(seconds);
-
-document.body.appendChild(input);
-document.body.appendChild(startBtn);
-document.body.appendChild(timer);
-
-const timerLabrary = document.querySelector('#datetime-picker');
-const startBtnEl = document.querySelector('#start-btn');
-const daysEl = document.querySelector('#days');
-const hoursEl = document.querySelector('#hours');
-const minutesEl = document.querySelector('#minutes');
-const secondsEl = document.querySelector('#seconds');
-
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -61,14 +13,14 @@ const options = {
         title: 'Error',
         message: 'Please choose a date in the future',
       });
-      document.getElementById('start-btn').disabled = true;
+      document.querySelector('[data-start]').disabled = true;
     } else {
-      document.getElementById('start-btn').disabled = false;
+      document.querySelector('[data-start]').disabled = false;
     }
   },
 };
 
-timerLabrary('#datetime-picker', options);
+flatpickr('#datetime-picker', options);
 
 function addLeadingZero(value) {
   return value.toString().padStart(2, '0');
@@ -76,10 +28,12 @@ function addLeadingZero(value) {
 
 function updateTimer(ms) {
   const { days, hours, minutes, seconds } = convertMs(ms);
-  document.getElementById('days').textContent = addLeadingZero(days);
-  document.getElementById('hours').textContent = addLeadingZero(hours);
-  document.getElementById('minutes').textContent = addLeadingZero(minutes);
-  document.getElementById('seconds').textContent = addLeadingZero(seconds);
+  document.querySelector('[data-days]').textContent = addLeadingZero(days);
+  document.querySelector('[data-hours]').textContent = addLeadingZero(hours);
+  document.querySelector('[data-minutes]').textContent =
+    addLeadingZero(minutes);
+  document.querySelector('[data-seconds]').textContent =
+    addLeadingZero(seconds);
 }
 
 function convertMs(ms) {
@@ -96,8 +50,8 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-document.getElementById('start-btn').addEventListener('click', () => {
-  const selectedDate = timerLabrary('#datetime-picker').selectedDates[0];
+document.querySelector('[data-start]').addEventListener('click', () => {
+  const selectedDate = flatpickr('#datetime-picker').selectedDates[0];
   const currentDate = new Date();
   const ms = selectedDate - currentDate;
   const intervalId = setInterval(() => {
