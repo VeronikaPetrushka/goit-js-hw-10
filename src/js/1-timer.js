@@ -5,24 +5,31 @@ const input = document.createElement('input');
 input.type = 'text';
 input.id = 'datetime-picker';
 input.placeholder = 'Select a date';
+
 const startBtn = document.createElement('button');
 startBtn.id = 'start-btn';
 startBtn.textContent = 'Start';
 startBtn.disabled = true;
+
 const timer = document.createElement('div');
 timer.id = 'timer';
+
 const days = document.createElement('span');
 days.id = 'days';
 days.textContent = '00';
+
 const hours = document.createElement('span');
 hours.id = 'hours';
 hours.textContent = '00';
+
 const minutes = document.createElement('span');
 minutes.id = 'minutes';
 minutes.textContent = '00';
+
 const seconds = document.createElement('span');
 seconds.id = 'seconds';
 seconds.textContent = '00';
+
 timer.appendChild(days);
 timer.appendChild(document.createTextNode(':'));
 timer.appendChild(hours);
@@ -30,9 +37,11 @@ timer.appendChild(document.createTextNode(':'));
 timer.appendChild(minutes);
 timer.appendChild(document.createTextNode(':'));
 timer.appendChild(seconds);
+
 document.body.appendChild(input);
 document.body.appendChild(startBtn);
 document.body.appendChild(timer);
+
 const flatpickr = document.querySelector('#datetime-picker');
 const startBtnEl = document.querySelector('#start-btn');
 const daysEl = document.querySelector('#days');
