@@ -42,7 +42,7 @@ document.body.appendChild(input);
 document.body.appendChild(startBtn);
 document.body.appendChild(timer);
 
-const flatpickr = document.querySelector('#datetime-picker');
+const timerLabrary = document.querySelector('#datetime-picker');
 const startBtnEl = document.querySelector('#start-btn');
 const daysEl = document.querySelector('#days');
 const hoursEl = document.querySelector('#hours');
@@ -68,7 +68,7 @@ const options = {
   },
 };
 
-flatpickr('#datetime-picker', options);
+timerLabrary('#datetime-picker', options);
 
 function addLeadingZero(value) {
   return value.toString().padStart(2, '0');
@@ -97,7 +97,7 @@ function convertMs(ms) {
 }
 
 document.getElementById('start-btn').addEventListener('click', () => {
-  const selectedDate = flatpickr('#datetime-picker').selectedDates[0];
+  const selectedDate = timerLabrary('#datetime-picker').selectedDates[0];
   const currentDate = new Date();
   const ms = selectedDate - currentDate;
   const intervalId = setInterval(() => {
