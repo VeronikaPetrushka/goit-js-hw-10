@@ -64,7 +64,7 @@ let countdownInterval;
 startButton.addEventListener('click', () => {
   const selectedDate = flatpickr('#datetime-picker').selectedDates[0];
   const currentDate = new Date();
-  const ms = selectedDate - currentDate;
+  let ms = selectedDate - currentDate;
   countdownInterval = setInterval(() => {
     updateTimer(ms);
     if (ms <= 0) {
@@ -73,7 +73,8 @@ startButton.addEventListener('click', () => {
         title: 'Success',
         message: 'Countdown finished',
       });
+      return;
     }
+    ms -= 1000;
   }, 1000);
-  updateTimer(ms);
 });
