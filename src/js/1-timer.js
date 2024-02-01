@@ -75,4 +75,5 @@ startButton.addEventListener('click', () => {
       });
     }
   }, 1000);
+  updateTimer(ms);
 });
