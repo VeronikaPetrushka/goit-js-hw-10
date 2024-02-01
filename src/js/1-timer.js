@@ -8,7 +8,7 @@ const options = {
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
-  onChange(selectedDates) {
+  onClose(selectedDates) {
     const selectedDate = selectedDates[0];
     if (selectedDate < new Date()) {
       iziToast.error({
@@ -24,18 +24,25 @@ const options = {
 
 flatpickr('#datetime-picker', options);
 
+const timerElements = {
+  days: document.querySelector('[data-days]'),
+  hours: document.querySelector('[data-hours]'),
+  minutes: document.querySelector('[data-minutes]'),
+  seconds: document.querySelector('[data-seconds]'),
+};
+
+const startButton = document.querySelector('[data-start]');
+
 function addLeadingZero(value) {
   return value.toString().padStart(2, '0');
 }
 
 function updateTimer(ms) {
   const { days, hours, minutes, seconds } = convertMs(ms);
-  document.querySelector('[data-days]').textContent = addLeadingZero(days);
-  document.querySelector('[data-hours]').textContent = addLeadingZero(hours);
-  document.querySelector('[data-minutes]').textContent =
-    addLeadingZero(minutes);
-  document.querySelector('[data-seconds]').textContent =
-    addLeadingZero(seconds);
+  timerElements.days.textContent = addLeadingZero(days);
+  timerElements.hours.textContent = addLeadingZero(hours);
+  timerElements.minutes.textContent = addLeadingZero(minutes);
+  timerElements.seconds.textContent = addLeadingZero(seconds);
 }
 
 function convertMs(ms) {
@@ -52,14 +59,16 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-document.querySelector('[data-start]').addEventListener('click', () => {
+let countdownInterval;
+
+startButton.addEventListener('click', () => {
   const selectedDate = flatpickr('#datetime-picker').selectedDates[0];
   const currentDate = new Date();
   const ms = selectedDate - currentDate;
-  const intervalId = setInterval(() => {
+  countdownInterval = setInterval(() => {
     updateTimer(ms);
     if (ms <= 0) {
-      clearInterval(intervalId);
+      clearInterval(countdownInterval);
       iziToast.success({
         title: 'Success',
         message: 'Countdown finished',
