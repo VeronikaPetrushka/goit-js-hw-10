@@ -18,11 +18,11 @@ const options = {
       document.querySelector('[data-start]').disabled = true;
     } else {
       document.querySelector('[data-start]').disabled = false;
+      this.setDate(selectedDate);
+      startCountdown(selectedDate);
     }
   },
 };
-
-flatpickr('#datetime-picker', options);
 
 const timerElements = {
   days: document.querySelector('[data-days]'),
@@ -61,12 +61,10 @@ function convertMs(ms) {
 
 let countdownInterval;
 
-startButton.addEventListener('click', () => {
-  const selectedDate = flatpickr('#datetime-picker').selectedDates[0];
+function startCountdown(selectedDate) {
   const currentDate = new Date();
   let ms = selectedDate - currentDate;
   countdownInterval = setInterval(() => {
-    updateTimer(ms);
     if (ms <= 0) {
       clearInterval(countdownInterval);
       iziToast.success({
@@ -75,6 +73,12 @@ startButton.addEventListener('click', () => {
       });
       return;
     }
+    updateTimer(ms);
     ms -= 1000;
   }, 1000);
+}
+
+startButton.addEventListener('click', () => {
+  const selectedDate = flatpickr('#datetime-picker', options).selectedDates[0];
+  startCountdown(selectedDate);
 });
