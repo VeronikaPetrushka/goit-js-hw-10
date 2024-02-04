@@ -18,6 +18,7 @@ const timerElements = {
 };
 
 const startButton = document.querySelector('[data-start]');
+const datetimePicker = document.querySelector('#datetime-picker');
 let countdownInterval;
 
 function addLeadingZero(value) {
@@ -66,6 +67,8 @@ function startCountdown(selectedDate) {
       });
       flatpickrInstance.setDate(new Date());
       flatpickrInstance.close();
+      startButton.disabled = false;
+      datetimePicker.disabled = false;
       return;
     }
     updateTimer(ms);
@@ -85,15 +88,32 @@ flatpickrInstance.config.onClose = selectedDates => {
       title: 'Error',
       message: 'Please choose a date in the future',
     });
-    document.querySelector('[data-start]').disabled = true;
+    startButton.disabled = true;
+    datetimePicker.disabled = true;
   } else {
-    document.querySelector('[data-start]').disabled = false;
+    startButton.disabled = false;
+    datetimePicker.disabled = false;
     flatpickrInstance.setDate(selectedDate);
-    startCountdown(selectedDate);
   }
 };
 
 startButton.addEventListener('click', () => {
   const selectedDate = flatpickrInstance.selectedDates[0];
   startCountdown(selectedDate);
+  startButton.disabled = true;
+  datetimePicker.disabled = true;
+});
+
+datetimePicker.addEventListener('change', () => {
+  const selectedDate = new Date(datetimePicker.value);
+  if (selectedDate < new Date()) {
+    iziToast.error({
+      title: 'Error',
+      message: 'Please choose a date in the future',
+    });
+    startButton.disabled = true;
+  } else {
+    startButton.disabled = false;
+    flatpickrInstance.setDate(selectedDate);
+  }
 });
